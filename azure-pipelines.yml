@@ -16,22 +16,24 @@ steps:
   inputs:
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/azure/kubernetes'
-    # commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.secureFilePath)'
     backendType: 'azurerm'
     backendServiceArm: 'azure-resource-manager-service-connection'
+    backendAzureRmSubscriptionId: '9707751e-bb10-42ab-a3b2-cd05593218ae'
     ensureBackend: true
-    backendAzureRmResourceGroupName: 'terraform-backend-rg'
-    backendAzureRmResourceGroupLocation: 'westeurope'
-    backendAzureRmStorageAccountName: 'storageacctrangaxyz'
-    backendAzureRmContainerName: 'storageacctrangacontainer'
-    backendAzureRmKey: 'kubernetes-dev.tfstate'
-
+    backendAzureRmResourceGroupName: 'tfbe'
+    backendAzureRmResourceGroupLocation: 'East US'
+    backendAzureRmStorageAccountName: 'tfberg'
+    backendAzureRmContainerName: 'tfbend'
+    backendAzureRmKey: '0rIrxXccuT3wY1EpqkwujSpj253n/EgndUjxigS5D28hgSKMpPIstKs0T6YUHogl+ordtDw55FTK+AStHyXGvQ=='
+    allowTelemetryCollection: true
 - task: TerraformCLI@0
   inputs:
     command: 'apply'
     workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/azure/kubernetes'
     environmentServiceName: 'azure-resource-manager-service-connection'
+    providerAzureRmSubscriptionId: '9707751e-bb10-42ab-a3b2-cd05593218ae'
     commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.secureFilePath)'
+    allowTelemetryCollection: true
 
 - task: TerraformCLI@0
   inputs:
